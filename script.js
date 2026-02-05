@@ -1,4 +1,4 @@
-fetch("data.json")
+fetch("https://script.google.com/macros/s/AKfycbw6InLjqGZd3Bhv_O3iTJ20VKcRI_LQVGXaF9B3LC0LmawmlC-80u-e4YURgIh7MWkI/exec")
   .then(response => response.json())
   .then(data => {
     // Valeurs actuelles (dernière valeur du tableau)
