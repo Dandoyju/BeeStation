@@ -33,9 +33,22 @@
       </div>
     </section>
 
-    <section class="chart-container">
-      <canvas id="weatherChart"></canvas>
-    </section>
+    <section class="charts">
+    <div class="chart-container">
+      <h3>Température (°C)</h3>
+      <canvas id="tempChart"></canvas>
+    </div>
+  
+    <div class="chart-container">
+      <h3>Humidité (%)</h3>
+      <canvas id="humChart"></canvas>
+    </div>
+  
+    <div class="chart-container">
+      <h3>Pression (hPa)</h3>
+      <canvas id="pressChart"></canvas>
+    </div>
+  </section>
 
     <p class="update">
       Dernière mise à jour : <span id="timestamp">--</span>

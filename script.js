@@ -1,7 +1,8 @@
 fetch("https://script.google.com/macros/s/AKfycbw6InLjqGZd3Bhv_O3iTJ20VKcRI_LQVGXaF9B3LC0LmawmlC-80u-e4YURgIh7MWkI/exec")
-  .then(response => response.json())
+ .then(response => response.json())
   .then(data => {
-    // Valeurs actuelles (dernière valeur du tableau)
+
+    // Dernières valeurs
     const lastTemp = data.temperature.at(-1);
     const lastHum = data.humidity.at(-1);
     const lastPress = data.pressure.at(-1);
@@ -12,42 +13,57 @@ fetch("https://script.google.com/macros/s/AKfycbw6InLjqGZd3Bhv_O3iTJ20VKcRI_LQVG
     document.getElementById("timestamp").textContent =
       new Date(data.timestamp).toLocaleString();
 
-    // Graphique
-    const labels = data.temperature.map((_, i) => `T-${data.temperature.length - i}`);
+    // Labels communs
+    const labels = data.temperature.map((_, i) => i + 1);
 
-    const ctx = document.getElementById("weatherChart").getContext("2d");
-
-    new Chart(ctx, {
+    // Température
+    new Chart(document.getElementById("tempChart"), {
       type: "line",
       data: {
         labels: labels,
-        datasets: [
-          {
-            label: "Température (°C)",
-            data: data.temperature,
-            tension: 0.3
-          },
-          {
-            label: "Humidité (%)",
-            data: data.humidity,
-            tension: 0.3
-          },
-          {
-            label: "Pression (hPa)",
-            data: data.pressure,
-            tension: 0.3
-          }
-        ]
+        datasets: [{
+          label: "Température (°C)",
+          data: data.temperature,
+          tension: 0.3
+        }]
       },
       options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "bottom"
-          }
-        }
+        responsive: true
       }
     });
+
+    // Humidité
+    new Chart(document.getElementById("humChart"), {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Humidité (%)",
+          data: data.humidity,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
+    // Pression
+    new Chart(document.getElementById("pressChart"), {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Pression (hPa)",
+          data: data.pressure,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
   })
   .catch(err => {
     console.error("Erreur de chargement des données :", err);
