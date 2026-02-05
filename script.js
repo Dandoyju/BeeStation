@@ -1,5 +1,5 @@
 fetch("https://script.google.com/macros/s/AKfycbw6InLjqGZd3Bhv_O3iTJ20VKcRI_LQVGXaF9B3LC0LmawmlC-80u-e4YURgIh7MWkI/exec")
- .then(response => response.json())
+  .then(response => response.json())
   .then(data => {
 
     // Dernières valeurs
@@ -18,75 +18,72 @@ fetch("https://script.google.com/macros/s/AKfycbw6InLjqGZd3Bhv_O3iTJ20VKcRI_LQVG
 
     // Température
     new Chart(document.getElementById("tempChart"), {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "Température (°C)",
-        data: data.temperature,
-        fill: true,
-        tension: 0.3,
-        borderColor: "rgba(239, 83, 80, 1)",
-        backgroundColor: "rgba(239, 83, 80, 0.25)"
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: false
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Température (°C)",
+          data: data.temperature,
+          fill: true,
+          tension: 0.3,
+          borderColor: "rgba(239, 83, 80, 1)",
+          backgroundColor: "rgba(239, 83, 80, 0.25)"
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: false }
         }
       }
-    }
-  });
+    });
 
     // Humidité
     new Chart(document.getElementById("humChart"), {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "Humidité (%)",
-        data: data.humidity,
-        fill: true,
-        tension: 0.3,
-        borderColor: "rgba(66, 165, 245, 1)",
-        backgroundColor: "rgba(66, 165, 245, 0.25)"
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Humidité (%)",
+          data: data.humidity,
+          fill: true,
+          tension: 0.3,
+          borderColor: "rgba(66, 165, 245, 1)",
+          backgroundColor: "rgba(66, 165, 245, 0.25)"
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true }
         }
       }
-    }
-  });
+    });
 
     // Pression
     new Chart(document.getElementById("pressChart"), {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "Pression (hPa)",
-        data: data.pressure,
-        fill: true,
-        tension: 0.3,
-        borderColor: "rgba(102, 187, 106, 1)",
-        backgroundColor: "rgba(102, 187, 106, 0.25)"
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: false
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Pression (hPa)",
+          data: data.pressure,
+          fill: true,
+          tension: 0.3,
+          borderColor: "rgba(102, 187, 106, 1)",
+          backgroundColor: "rgba(102, 187, 106, 0.25)"
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: false }
         }
       }
-    }
-  });
+    });
 
   })
   .catch(err => {
