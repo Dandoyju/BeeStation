@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwA5kBA1vctyttzDpvZKTlQzspZC6xFQFIMIhFkOVfeWNxngigoZLVtjIE2WMc2vFo0/exec?read=true";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrl2Y_I5UilFTDjg-Kyu1PzcoFRYNv2c5_H6x7H3W63bCBeCOYEPgeREzjfSzxQVBa/exec?read=true";
 // Variables globales pour stocker les charts
 let tempChart, humChart, pressChart;
 
