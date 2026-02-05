@@ -99,6 +99,6 @@ footer {
   }
 
   .chart-container canvas {
-    height: 300px !important; /* hauteur PC plus grande */
+    height: 400px !important; /* hauteur PC plus grande */
   }
 }
