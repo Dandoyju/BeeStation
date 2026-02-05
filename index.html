@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Station météo – ESP32</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>🌦️ Station météo</h1>
+    <p>Données accessibles publiquement</p>
+  </header>
+
+  <main>
+    <section class="cards">
+      <div class="card">
+        <h2>Température</h2>
+        <p><span id="temp">--</span> °C</p>
+      </div>
+      <div class="card">
+        <h2>Humidité</h2>
+        <p><span id="hum">--</span> %</p>
+      </div>
+      <div class="card">
+        <h2>Pression</h2>
+        <p><span id="press">--</span> hPa</p>
+      </div>
+    </section>
+
+    <section class="chart-container">
+      <canvas id="weatherChart"></canvas>
+    </section>
+
+    <p class="update">
+      Dernière mise à jour : <span id="timestamp">--</span>
+    </p>
+  </main>
+
+  <footer>
+    <p>Projet ESP32 – GitHub Pages</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
