@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzalVXmQSDlgZQL9db-Ehw7P9QKNIlQJJvWXoLTMvwdbvluQuZv4HLkiONJe4h2z0qI/exec"
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzalVXmQSDlgZQL9db-Ehw7P9QKNIlQJJvWXoLTMvwdbvluQuZv4HLkiONJe4h2z0qI/exec?read=true"
 // Variables globales pour stocker les charts
 let tempChart, humChart, pressChart;
 
@@ -101,6 +101,3 @@ function loadData() {
 
 // Chargement initial
 loadData();
-
-// Rafraîchissement automatique toutes les heures (3600 000 ms)
-setInterval(loadData, 3600000);
