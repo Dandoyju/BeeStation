@@ -44,7 +44,11 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: { beginAtZero: false }
+            y: { beginAtZero: false,
+                min: 0,
+                max: 40,
+                ticks: {stepSize: 5}
+             }
           }
         }
       });
