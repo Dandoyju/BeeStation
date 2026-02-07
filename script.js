@@ -1,5 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyyFAUylYgbvbmNAPWNmiazXlX_ZyApuyMehtOPHw6yPfmdaxOFDXSeil9pm-Yl3GE/exec?read=true";
-
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzv32zYNIGV7yfag-gs8UYSRHKAm_1VwLyq-c_qynh-dFk5RjFX-HC8G_sPPlEfKJW5/exec?read=true";
 // Variables globales pour stocker les charts
 let tempChart, humChart, pressChart;
 
@@ -8,43 +7,30 @@ function loadData() {
   fetch(SCRIPT_URL)
     .then(response => response.json())
     .then(data => {
-
-      // ===============================
-      // 🔹 Dernières valeurs
-      // ===============================
+      // Dernières valeurs
       const lastTemp = data.temperature.at(-1);
       const lastHum = data.humidity.at(-1);
       const lastPress = data.pressure.at(-1);
-      const lastTimestamp = data.timestamps.at(-1);
 
       document.getElementById("temp").textContent = lastTemp.toFixed(1);
       document.getElementById("hum").textContent = lastHum.toFixed(1);
       document.getElementById("press").textContent = lastPress.toFixed(1);
       document.getElementById("timestamp").textContent =
-        new Date(lastTimestamp).toLocaleString("fr-FR");
+        new Date(data.timestamp).toLocaleString();
 
-      // ===============================
-      // 🔹 Labels = heures
-      // ===============================
-      const labels = data.timestamps.map(t =>
-        new Date(t).toLocaleTimeString("fr-FR", {
-          hour: "2-digit",
-          minute: "2-digit"
-        })
-      );
+      // Labels communs pour les graphiques
+      const labels = data.temperature.map((_, i) => i + 1);
 
-      // Détruire les anciens charts s’ils existent
+      // Détruire les anciens charts si ils existent
       if (tempChart) tempChart.destroy();
       if (humChart) humChart.destroy();
       if (pressChart) pressChart.destroy();
 
-      // ===============================
-      // 🌡 Température
-      // ===============================
+      // Création graphique Température
       tempChart = new Chart(document.getElementById("tempChart"), {
         type: "line",
         data: {
-          labels,
+          labels: labels,
           datasets: [{
             label: "Température (°C)",
             data: data.temperature,
@@ -58,22 +44,20 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: {
-              min: 0,
-              max: 40,
-              ticks: { stepSize: 5 }
-            }
+            y: {beginAtZero: false,
+                min: 0,
+                max: 40,
+                ticks: {stepSize: 5}
+             }
           }
         }
       });
 
-      // ===============================
-      // 💧 Humidité
-      // ===============================
+      // Création graphique Humidité
       humChart = new Chart(document.getElementById("humChart"), {
         type: "line",
         data: {
-          labels,
+          labels: labels,
           datasets: [{
             label: "Humidité (%)",
             data: data.humidity,
@@ -87,21 +71,21 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: {
-              min: 0,
-              max: 100
-            }
+            y: {beginAtZero: true,
+                y: {
+                min: 0,
+                max: 100
+                }
+             }
           }
         }
       });
 
-      // ===============================
-      // 🌬 Pression
-      // ===============================
+      // Création graphique Pression
       pressChart = new Chart(document.getElementById("pressChart"), {
         type: "line",
         data: {
-          labels,
+          labels: labels,
           datasets: [{
             label: "Pression (hPa)",
             data: data.pressure,
@@ -115,10 +99,10 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: {
-              min: 950,
-              max: 1050
-            }
+            y: {beginAtZero: false,
+                min:950,
+                max:1050
+             }
           }
         }
       });
