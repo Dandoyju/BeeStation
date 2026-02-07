@@ -44,7 +44,7 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: { beginAtZero: false,
+            y: {beginAtZero: false,
                 min: 0,
                 max: 40,
                 ticks: {stepSize: 5}
@@ -71,7 +71,12 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: { beginAtZero: true }
+            y: {beginAtZero: true,
+                y: {
+                min: 0,
+                max: 100
+                }
+             }
           }
         }
       });
@@ -94,7 +99,10 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: { beginAtZero: false }
+            y: {beginAtZero: false,
+                min:950,
+                max:1050
+             }
           }
         }
       });
