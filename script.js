@@ -1,4 +1,5 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRNlXhODKuF72I70o8wNy3Qy7-0VOtlFKtGEcOFwwWOwomGkHYL4dxjmwET7oFAyOm/exec?read=true";
+
 // Variables globales pour stocker les charts
 let tempChart, humChart, pressChart;
 
@@ -7,30 +8,43 @@ function loadData() {
   fetch(SCRIPT_URL)
     .then(response => response.json())
     .then(data => {
-      // Dernières valeurs
+
+      // ===============================
+      // 🔹 Dernières valeurs
+      // ===============================
       const lastTemp = data.temperature.at(-1);
       const lastHum = data.humidity.at(-1);
       const lastPress = data.pressure.at(-1);
+      const lastTimestamp = data.timestamps.at(-1);
 
       document.getElementById("temp").textContent = lastTemp.toFixed(1);
       document.getElementById("hum").textContent = lastHum.toFixed(1);
       document.getElementById("press").textContent = lastPress.toFixed(1);
       document.getElementById("timestamp").textContent =
-        new Date(data.timestamp).toLocaleString();
+        new Date(lastTimestamp).toLocaleString("fr-FR");
 
-      // Labels communs pour les graphiques
-      const labels = data.temperature.map((_, i) => i + 1);
+      // ===============================
+      // 🔹 Labels = heures
+      // ===============================
+      const labels = data.timestamps.map(t =>
+        new Date(t).toLocaleTimeString("fr-FR", {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      );
 
-      // Détruire les anciens charts si ils existent
+      // Détruire les anciens charts s’ils existent
       if (tempChart) tempChart.destroy();
       if (humChart) humChart.destroy();
       if (pressChart) pressChart.destroy();
 
-      // Création graphique Température
+      // ===============================
+      // 🌡 Température
+      // ===============================
       tempChart = new Chart(document.getElementById("tempChart"), {
         type: "line",
         data: {
-          labels: labels,
+          labels,
           datasets: [{
             label: "Température (°C)",
             data: data.temperature,
@@ -44,20 +58,22 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: {beginAtZero: false,
-                min: 0,
-                max: 40,
-                ticks: {stepSize: 5}
-             }
+            y: {
+              min: 0,
+              max: 40,
+              ticks: { stepSize: 5 }
+            }
           }
         }
       });
 
-      // Création graphique Humidité
+      // ===============================
+      // 💧 Humidité
+      // ===============================
       humChart = new Chart(document.getElementById("humChart"), {
         type: "line",
         data: {
-          labels: labels,
+          labels,
           datasets: [{
             label: "Humidité (%)",
             data: data.humidity,
@@ -71,21 +87,21 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: {beginAtZero: true,
-                y: {
-                min: 0,
-                max: 100
-                }
-             }
+            y: {
+              min: 0,
+              max: 100
+            }
           }
         }
       });
 
-      // Création graphique Pression
+      // ===============================
+      // 🌬 Pression
+      // ===============================
       pressChart = new Chart(document.getElementById("pressChart"), {
         type: "line",
         data: {
-          labels: labels,
+          labels,
           datasets: [{
             label: "Pression (hPa)",
             data: data.pressure,
@@ -99,10 +115,10 @@ function loadData() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            y: {beginAtZero: false,
-                min:950,
-                max:1050
-             }
+            y: {
+              min: 950,
+              max: 1050
+            }
           }
         }
       });
