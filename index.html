@@ -6,59 +6,66 @@
   <title>Station météo – ESP32</title>
 
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
-  <header>
-    <h1>🌦️ Station météo</h1>
-    <p>Données accessibles publiquement</p>
-  </header>
+<header>
+  <h1>🌦️ Station météo</h1>
+  <p>Données météo en temps réel – ESP32</p>
+</header>
 
-  <main>
-    <section class="cards">
-      <div class="card">
-        <h2>Température</h2>
-        <p><span id="temp">--</span> °C</p>
-      </div>
-      <div class="card">
-        <h2>Humidité</h2>
-        <p><span id="hum">--</span> %</p>
-      </div>
-      <div class="card">
-        <h2>Pression</h2>
-        <p><span id="press">--</span> hPa</p>
-      </div>
-    </section>
+<main>
 
-    <section class="charts">
-    <div class="chart-container">
-      <h3>Température (°C)</h3>
-      <canvas id="tempChart"></canvas>
+  <!-- BARRE DE SELECTION -->
+  <section class="cards">
+    <div class="card glass active" data-target="tempChartBox">
+      <h2>Température</h2>
+      <p><span id="temp">--</span> °C</p>
     </div>
-  
-    <div class="chart-container">
-      <h3>Humidité (%)</h3>
-      <canvas id="humChart"></canvas>
+
+    <div class="card glass" data-target="humChartBox">
+      <h2>Humidité</h2>
+      <p><span id="hum">--</span> %</p>
     </div>
-  
-    <div class="chart-container">
-      <h3>Pression (hPa)</h3>
-      <canvas id="pressChart"></canvas>
+
+    <div class="card glass" data-target="pressChartBox">
+      <h2>Pression</h2>
+      <p><span id="press">--</span> hPa</p>
     </div>
   </section>
 
-    <p class="update">
-      Dernière mise à jour : <span id="timestamp">--</span>
-    </p>
-  </main>
+  <!-- GRAPHE PLEINE LARGEUR -->
+  <section class="chart-zone glass">
 
-  <footer>
-    <p>Projet ESP32 – GitHub Pages</p>
-  </footer>
+    <div class="chart-container active" id="tempChartBox">
+      <h3>Température (°C)</h3>
+      <canvas id="tempChart"></canvas>
+    </div>
 
-  <script src="script.js"></script>
+    <div class="chart-container" id="humChartBox">
+      <h3>Humidité (%)</h3>
+      <canvas id="humChart"></canvas>
+    </div>
+
+    <div class="chart-container" id="pressChartBox">
+      <h3>Pression (hPa)</h3>
+      <canvas id="pressChart"></canvas>
+    </div>
+
+  </section>
+
+  <p class="update">
+    Dernière mise à jour : <span id="timestamp">--</span>
+  </p>
+
+</main>
+
+<footer>
+  <p>Projet ESP32 – GitHub Pages</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>

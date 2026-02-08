@@ -1,115 +1,115 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzv32zYNIGV7yfag-gs8UYSRHKAm_1VwLyq-c_qynh-dFk5RjFX-HC8G_sPPlEfKJW5/exec?read=true";
-// Variables globales pour stocker les charts
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzv32zYNIGV7yfag-gs8UYSRHKAm_1VwLyq-c_qynh-dFk5RjFX-HC8G_sPPlEfKJW5/exec?read=true";
+
 let tempChart, humChart, pressChart;
 
-// Fonction pour charger les données et mettre à jour le DOM + graphiques
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".card");
+  const charts = document.querySelectorAll(".chart-container");
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      cards.forEach(c => c.classList.remove("active"));
+      card.classList.add("active");
+
+      const target = card.dataset.target;
+      charts.forEach(chart => {
+        chart.classList.toggle("active", chart.id === target);
+      });
+    });
+  });
+});
+
 function loadData() {
   fetch(SCRIPT_URL)
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
-      // Dernières valeurs
-      const lastTemp = data.temperature.at(-1);
-      const lastHum = data.humidity.at(-1);
-      const lastPress = data.pressure.at(-1);
-
-      document.getElementById("temp").textContent = lastTemp.toFixed(1);
-      document.getElementById("hum").textContent = lastHum.toFixed(1);
-      document.getElementById("press").textContent = lastPress.toFixed(1);
+      document.getElementById("temp").textContent = data.temperature.at(-1).toFixed(1);
+      document.getElementById("hum").textContent = data.humidity.at(-1).toFixed(1);
+      document.getElementById("press").textContent = data.pressure.at(-1).toFixed(1);
       document.getElementById("timestamp").textContent =
         new Date(data.timestamp).toLocaleString();
 
-      // Labels communs pour les graphiques
       const labels = data.temperature.map((_, i) => i + 1);
 
-      // Détruire les anciens charts si ils existent
-      if (tempChart) tempChart.destroy();
-      if (humChart) humChart.destroy();
-      if (pressChart) pressChart.destroy();
+      tempChart?.destroy();
+      humChart?.destroy();
+      pressChart?.destroy();
 
-      // Création graphique Température
-      tempChart = new Chart(document.getElementById("tempChart"), {
+      tempChart = new Chart(tempChartCanvas(), {
         type: "line",
         data: {
-          labels: labels,
+          labels,
           datasets: [{
-            label: "Température (°C)",
             data: data.temperature,
+            borderColor: "#ff5252",
+            backgroundColor: "rgba(255,82,82,0.25)",
             fill: true,
-            tension: 0.3,
-            borderColor: "rgba(239, 83, 80, 1)",
-            backgroundColor: "rgba(239, 83, 80, 0.25)"
+            tension: 0.35
           }]
         },
         options: {
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
           responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {beginAtZero: false,
-                min: 0,
-                max: 40,
-                ticks: {stepSize: 5}
-             }
-          }
+          maintainAspectRatio: false
         }
       });
 
-      // Création graphique Humidité
-      humChart = new Chart(document.getElementById("humChart"), {
+      humChart = new Chart(humChartCanvas(), {
         type: "line",
         data: {
-          labels: labels,
+          labels,
           datasets: [{
-            label: "Humidité (%)",
             data: data.humidity,
+            borderColor: "#40c4ff",
+            backgroundColor: "rgba(64,196,255,0.25)",
             fill: true,
-            tension: 0.3,
-            borderColor: "rgba(66, 165, 245, 1)",
-            backgroundColor: "rgba(66, 165, 245, 0.25)"
+            tension: 0.35
           }]
         },
         options: {
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
           responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {beginAtZero: true,
-                y: {
-                min: 0,
-                max: 100
-                }
-             }
-          }
+          maintainAspectRatio: false
         }
       });
 
-      // Création graphique Pression
-      pressChart = new Chart(document.getElementById("pressChart"), {
+
+      pressChart = new Chart(pressChartCanvas(), {
         type: "line",
         data: {
-          labels: labels,
+          labels,
           datasets: [{
-            label: "Pression (hPa)",
             data: data.pressure,
+            borderColor: "#69f0ae",
+            backgroundColor: "rgba(105,240,174,0.25)",
             fill: true,
-            tension: 0.3,
-            borderColor: "rgba(102, 187, 106, 1)",
-            backgroundColor: "rgba(102, 187, 106, 0.25)"
+            tension: 0.35
           }]
         },
         options: {
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
           responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {beginAtZero: false,
-                min:950,
-                max:1050
-             }
-          }
+          maintainAspectRatio: false
         }
       });
-
-    })
-    .catch(err => console.error("Erreur de chargement des données :", err));
+    });
 }
 
-// Chargement initial
+function tempChartCanvas() { return document.getElementById("tempChart"); }
+function humChartCanvas() { return document.getElementById("humChart"); }
+function pressChartCanvas() { return document.getElementById("pressChart"); }
+
 loadData();
